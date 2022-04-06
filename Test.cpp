@@ -16,7 +16,6 @@ string nospaces(string input) {
 	return input;
 }
 
-//Matrix Create()
 
 
 TEST_CASE("size of matrix"){
@@ -24,14 +23,12 @@ TEST_CASE("size of matrix"){
         vector<double>a = {i,i,i,i,i,i};
         Matrix ans = zich::Matrix{a,3,2};
         vector<double>b = {i,i,i,i,i,i};
-        Matrix check = zich::Matrix{b,3,2};
-        // try{
-        //     check(ans+check == ans);
-        // }
-        // catch{
-        //     CHECK_THROWS()
-        // }
-        // todo: שייזרקו שגיאות על גודל המטריצה
+        Matrix check = zich::Matrix{b,2,3};
+        // check some operators
+        CHECK_THROWS(ans + check);
+        CHECK_THROWS(ans * check);
+        CHECK_THROWS(ans < check);
+        CHECK_THROWS(ans == check);
 
     }
     
@@ -43,12 +40,13 @@ TEST_CASE("constractor"){
     CHECK_THROWS(Matrix(a,-1,4));
 }
 TEST_CASE("operator +") {
-    vector<double> a = {1,0,0,0,1,0,0,0,1};
-    Matrix ans = zich::Matrix{a,3,3};
-	// CHECK((ans+ans == "2 0 0\n"
-    //                   "0 2 0\n"
-    //                   "0 0 2")); // add nospaces
-	/* Add more test here */
+    for (double i=0; i < 10; i++){
+        vector<double> a = {i,0,0,0,i,0,0,0,i};
+        Matrix ans = Matrix{a,3,3};
+        vector<double> b = {2*i,0,0,0,2*i,0,0,0,2*i};
+        Matrix check = Matrix(b,3,3);
+        CHECK(((ans+ans) == check));
+    }
 }
 TEST_CASE("operator -"){
     for(double i=0; i<10; i++){
@@ -64,7 +62,7 @@ TEST_CASE("operator +=" ){
     for (double i=0; i < 10; i++){
         vector<double> a = {i,0,0,0,i,0,0,0,i};
         Matrix ans = Matrix{a,3,3};
-        vector<double> b = {2*i,0,0,2*i,0,0,0,0,2*i};
+        vector<double> b = {2*i,0,0,0,2*i,0,0,0,2*i};
         Matrix check = Matrix(b,3,3);
         CHECK(((ans+=ans) == check));
     }
@@ -191,7 +189,7 @@ TEST_CASE("operator --()") {
         CHECK_EQ((((ans--) == check)), false);
     }
 }
-TEST_CASE("operator ++()") { // ++ first 
+TEST_CASE("operator ++(ind)") { // ++ first 
     for (double i=0; i<=10; i++){
         vector<double> a = {i,0,0,i,0,i,0,0,i};
         Matrix ans = zich::Matrix{a,3,3};
