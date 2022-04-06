@@ -27,9 +27,6 @@ TEST_CASE("size of matrix"){
         // check some operators
         CHECK_THROWS(ans + check);
         CHECK_THROWS(ans * check);
-        CHECK_THROWS(ans < check);
-        CHECK_THROWS(ans == check);
-
     }
     
 }
